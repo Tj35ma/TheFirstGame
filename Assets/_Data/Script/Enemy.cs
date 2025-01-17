@@ -2,17 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    int currentHp = 10;
+    int maxHP = 100;
+    float enemyWeight = 2.5f;
+    bool isDead = true;
+    bool isBoss = false;
+
+    int GetCurrentHp()
     {
-        
+        return this.currentHp;
     }
 
-    // Update is called once per frame
-    void Update()
+    float GetWeight()
     {
-        
+        return this.enemyWeight;
+    }
+
+    protected abstract string GetName();
+    
+    void GetisDead()
+    {
+
+    }
+      
+    bool IsBoss()
+    {
+        return this.isBoss;
+    }
+
+    public void Moving()
+    {
+        string logMessage = this.GetName() + " Moving";
+        Debug.Log(logMessage);
     }
 }
