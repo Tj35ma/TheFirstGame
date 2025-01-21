@@ -13,7 +13,10 @@ public class MyScript : MonoBehaviour
 
     void TestisDead()
     {
-       
+        //Zombie zombie = new Zombie();
+        //zombie.SetHp(0);
+        //string Logmesage = zombie.GetName() + ": " + zombie.GetCurrentHp() +" " + zombie.IsDead();
+        //Debug.Log(Logmesage);        
     }
 
     void TestClass()

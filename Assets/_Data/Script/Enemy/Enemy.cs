@@ -6,25 +6,61 @@ public abstract class Enemy : MonoBehaviour
 {
     int currentHp = 10;
     int maxHp = 100;
-    float enemyWeight = 2.5f;
+    float Weight = 1f;
+    float minWeight = 1f;
+    float maxWeight = 10f;
     bool isDead = true;
     bool isBoss = false;
 
-   
+    private void Reset()
+    {
+        this.InitData();
+    }
+
+    private void OnEnable()
+    {
+        this.InitData();
+    }
+
+    public abstract string GetName();
+
+    public virtual string GetObjName()
+    {
+        return transform.name;
+    }
+
+    protected virtual void InitData()
+    {
+        this.Weight = this.GetRandomWeight();
+    }
+
+    protected virtual float GetRandomWeight()
+    {
+        return Random.Range(this.minWeight, this.maxWeight);
+    }
+
+    public virtual float GetWeight()
+    {
+        return this.Weight;
+    }
+
+    public virtual float GetMinWeight()
+    {
+        return this.minWeight;
+    }
+
+    public virtual float GetMaxWeight()
+    {
+        return this.maxWeight;
+    }
+
     public virtual bool IsDead()
     {
         if(this.currentHp > 0) this.isDead = false;
         else this.isDead = true;
 
         return this.isDead;
-    }
-
-    public abstract string GetName();
-
-    void GetisDead()
-    {
-
-    }
+    }      
 
     public virtual int GetMaxHp()
     {
@@ -39,13 +75,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void SetHp(int newHp)
     {
         this.currentHp = newHp;
-    }
-
-    float GetWeight()
-    {
-        return this.enemyWeight;
-    }
-
+    }   
       
     bool IsBoss()
     {
