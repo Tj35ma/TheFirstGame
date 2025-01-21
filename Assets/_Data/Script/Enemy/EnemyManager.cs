@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     List<Enemy> enemies = new List<Enemy>();
+
+    public List<Enemy> Enemies => this.enemies;
+
     Enemy smallestenemy;
     Enemy biggestenemy;
 
@@ -15,8 +18,8 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        this.LoadSmallestEnemy();
-        this.LoadBiggestEnemy();
+        //this.LoadSmallestEnemy();
+        //this.LoadBiggestEnemy();
     }
 
     protected virtual void LoadSmallestEnemy()
