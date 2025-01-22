@@ -9,11 +9,18 @@ public class EnemyCtrl : TFGMonoBehaviour
     [SerializeField] protected NavMeshAgent agent;
     public NavMeshAgent Agent => agent;
 
+    [SerializeField] protected Animator animator;
+    public Animator Animator => animator;
+
+    [SerializeField] protected TowerTargetable towerTargetable;
+    public TowerTargetable TowerTargetable => towerTargetable;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadNavMeshAgent();
         this.LoadModel();
+        this.LoadAnimator();
+        this.LoadTowerTargetable();
     }
 
     protected virtual void LoadNavMeshAgent()
@@ -30,6 +37,20 @@ public class EnemyCtrl : TFGMonoBehaviour
     {
         if (this.model != null) return;
         this.model = transform.Find("Model");        
+        Debug.Log(transform.name + ": LoadNavMeshAgent", gameObject);
+    }
+
+    protected virtual void LoadTowerTargetable()
+    {
+        if (this.towerTargetable != null) return;
+        this.towerTargetable = transform.GetComponentInChildren<TowerTargetable>();
+        Debug.Log(transform.name + ": TowerTargetable", gameObject);
+    }
+
+    protected virtual void LoadAnimator()
+    {
+        if (this.animator != null) return;
+        this.animator = this.model.GetComponent<Animator>();
         Debug.Log(transform.name + ": LoadNavMeshAgent", gameObject);
     }
 }
