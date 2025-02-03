@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent (typeof(SphereCollider))]
@@ -9,8 +10,11 @@ public class TowerTargeting : TFGMonoBehaviour
 {
     [SerializeField] protected SphereCollider sphereCollider;
     [SerializeField] protected Rigidbody rigid;
+
     [SerializeField] protected EnemyCtrl nearest;
     public EnemyCtrl Nearest => nearest;
+
+    [SerializeField] protected LayerMask obstacleLayerMask;
 
     [SerializeField] protected List<EnemyCtrl> enemies = new();
 
@@ -18,6 +22,7 @@ public class TowerTargeting : TFGMonoBehaviour
     protected virtual void FixedUpdate()
     {
         this.FindNearest();
+        this.RemoveDeadEnemy();
     }
 
     protected virtual void OnTriggerEnter(Collider collider)
@@ -59,6 +64,7 @@ public class TowerTargeting : TFGMonoBehaviour
     {
         if (collider.name != Const.TOWER_TARGETABLE) return;
         EnemyCtrl enemyCtrl = collider.transform.parent.GetComponent<EnemyCtrl>();
+        if (enemyCtrl.EnemyDamageRecever.IsDead()) return;
         this.enemies.Add(enemyCtrl);
         Debug.Log("AddEnemy: " + collider.name);
     }
@@ -69,6 +75,7 @@ public class TowerTargeting : TFGMonoBehaviour
         {
             if (collider.transform.parent == enemyCtrl.transform)
             {
+                if(enemyCtrl == this.nearest) this.nearest = null;
                 this.enemies.Remove(enemyCtrl);
                 return;
             }
@@ -81,11 +88,39 @@ public class TowerTargeting : TFGMonoBehaviour
         float enemyDistance;
         foreach(EnemyCtrl enemyCtrl in this.enemies)
         {
+            if (!this.CanSeeTarget(enemyCtrl)) continue;
+
             enemyDistance = Vector3.Distance(transform.position, enemyCtrl.transform.position);
             if (enemyDistance < nearestDistance)
             {
                 nearestDistance = enemyDistance;
                 this.nearest = enemyCtrl;
+            }
+        }
+    }
+
+    protected virtual bool CanSeeTarget(EnemyCtrl target)
+    {
+        Vector3 direction = target.transform.position - transform.position;
+        float distance = direction.magnitude;
+
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, obstacleLayerMask))
+        {
+            return false;
+        }
+        Debug.DrawLine(transform.position, target.transform.position, Color.green);
+        return true;        
+    }
+
+    protected virtual void RemoveDeadEnemy()
+    {
+        foreach(EnemyCtrl enemyCtrl in this.enemies)
+        {
+            if (enemyCtrl.EnemyDamageRecever.IsDead())
+            {
+                if(enemyCtrl == this.nearest) this.nearest = null;
+                this.enemies.Remove(enemyCtrl);
+                return;
             }
         }
     }

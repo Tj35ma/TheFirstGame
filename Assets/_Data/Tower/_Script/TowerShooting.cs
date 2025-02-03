@@ -9,7 +9,7 @@ public class TowerShooting : TowerAbtrast
     [SerializeField] protected float shootSpeed = 0.1f;
     [SerializeField] protected float rotationSpeed = 2f;
     [SerializeField] protected EnemyCtrl target;    
-    [SerializeField] protected Bullet bullet;
+    [SerializeField] protected BulletCtrl bullet;
 
     protected override void Start()
     {
@@ -45,7 +45,7 @@ public class TowerShooting : TowerAbtrast
         if (this.target == null) return;
 
         FirePoint firePoint = this.GetFirePoint();
-        Bullet newBullet = this.towerCtrl.BulletSpawner.Spawn(this.towerCtrl.Bullet, firePoint.transform.position);
+        BulletCtrl newBullet = this.towerCtrl.BulletSpawner.Spawn(this.towerCtrl.Bullet, firePoint.transform.position);
         Vector3 rotatorDirection = this.towerCtrl.Rotator.transform.forward;
         newBullet.transform.forward = rotatorDirection;
         newBullet.gameObject.SetActive(true);

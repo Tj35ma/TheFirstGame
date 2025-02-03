@@ -7,25 +7,32 @@ using UnityEngine;
 public class TowerCtrl : TFGMonoBehaviour
 {
     [SerializeField] protected Transform model;
-    [SerializeField] protected Transform rotator;  
-
+    
+    [SerializeField] protected Transform rotator;
     public Transform Rotator => rotator;
 
+    
     [SerializeField] protected TowerTargeting towerTargeting;
-
     public TowerTargeting TowerTargeting => towerTargeting;
 
+    
     [SerializeField] protected BulletSpawner bulletSpawner;
-
     public BulletSpawner BulletSpawner => bulletSpawner;
 
-    [SerializeField] protected Bullet bullet;
+    
+    [SerializeField] protected string bulletName = "Bullet";
 
-    public Bullet Bullet => bullet;
 
+    [SerializeField] protected BulletCtrl bullet;
+    public BulletCtrl Bullet => bullet;
+
+    
     [SerializeField] protected List<FirePoint> firePoints = new();
-
     public List<FirePoint> FirePoint => firePoints;
+
+    
+    [SerializeField] protected BulletPrefabs bulletPrefabs;
+    public BulletPrefabs BulletPrefabs => bulletPrefabs;
 
     protected override void Awake()
     {
@@ -38,8 +45,8 @@ public class TowerCtrl : TFGMonoBehaviour
         base.LoadComponents();
         this.LoadModel();
         this.LoadTowerTargeting();
-        this.LoadBulletSpawner();
-        this.LoadBullet();
+        this.LoadBulletSpawner();        
+        this.LoadBulletPrefabs();
         this.LoadFirePoint();
     }
 
@@ -53,8 +60,17 @@ public class TowerCtrl : TFGMonoBehaviour
     protected virtual void LoadBullet()
     {
         if (this.bullet != null) return;
-        this.bullet = transform.GetComponentInChildren<Bullet>();
+        this.bullet = this.bulletPrefabs.GetbyNanme(this.bulletName);
         Debug.Log(transform.name + ": LoadBullet", gameObject);
+    }
+
+    protected virtual void LoadBulletPrefabs()
+    {
+        if (this.bulletPrefabs != null) return;
+        this.bulletPrefabs = GameObject.FindAnyObjectByType<BulletPrefabs>();
+        Debug.Log(transform.name + ": LoadBulletPrefabs", gameObject);
+
+        this.LoadBullet();
     }
 
     protected virtual void LoadModel()

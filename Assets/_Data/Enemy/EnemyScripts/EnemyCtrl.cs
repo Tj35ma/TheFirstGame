@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyCtrl : TFGMonoBehaviour
+public abstract class EnemyCtrl : PoolObj
 {
     [SerializeField] protected Transform model;
     [SerializeField] protected NavMeshAgent agent;
@@ -14,6 +14,10 @@ public class EnemyCtrl : TFGMonoBehaviour
 
     [SerializeField] protected TowerTargetable towerTargetable;
     public TowerTargetable TowerTargetable => towerTargetable;
+
+    [SerializeField] protected EnemyDamageRecever enemyDamageRecever;
+    public EnemyDamageRecever EnemyDamageRecever => enemyDamageRecever;
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -21,6 +25,14 @@ public class EnemyCtrl : TFGMonoBehaviour
         this.LoadModel();
         this.LoadAnimator();
         this.LoadTowerTargetable();
+        this.LoadEnemyDamageRecever();
+    }
+
+    protected virtual void LoadEnemyDamageRecever()
+    {
+        if (this.enemyDamageRecever != null) return;
+        this.enemyDamageRecever = GetComponentInChildren<EnemyDamageRecever>();
+        Debug.Log(transform.name + ": LoadEnemyDamageRecever", gameObject);
     }
 
     protected virtual void LoadNavMeshAgent()
@@ -36,8 +48,9 @@ public class EnemyCtrl : TFGMonoBehaviour
     protected virtual void LoadModel()
     {
         if (this.model != null) return;
-        this.model = transform.Find("Model");        
-        Debug.Log(transform.name + ": LoadNavMeshAgent", gameObject);
+        this.model = transform.Find("Model");
+        this.model.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        Debug.Log(transform.name + ": LoadModel", gameObject);
     }
 
     protected virtual void LoadTowerTargetable()
@@ -50,7 +63,9 @@ public class EnemyCtrl : TFGMonoBehaviour
     protected virtual void LoadAnimator()
     {
         if (this.animator != null) return;
-        this.animator = this.model.GetComponent<Animator>();
+        this.animator = GetComponentInChildren <Animator>();
         Debug.Log(transform.name + ": LoadNavMeshAgent", gameObject);
     }
+
 }
+    

@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Bullet : PoolObj
+public class BulletCtrl : PoolObj
 {
     [SerializeField] protected float speed = 50f;
+    
 
     public override string GetName()
     {
@@ -12,6 +13,5 @@ public class Bullet : PoolObj
     void Update()
     {
         transform.Translate(speed * Time.deltaTime * Vector3.forward);
-    }
-    
+    }    
 }

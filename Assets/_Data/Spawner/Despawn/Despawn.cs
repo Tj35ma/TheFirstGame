@@ -6,12 +6,13 @@ public abstract class Despawn<T> : DespawnBase where T : PoolObj
 {
     [SerializeField] protected T parent;
     [SerializeField] protected Spawner<T> spawner;
+    [SerializeField] protected bool isDespawnByTime = true;
     [SerializeField] protected float timeLife = 2f;
     [SerializeField] protected float currentTime = 2f;
 
     protected virtual void FixedUpdate()
     {
-        this.DespawnChecking();
+        this.DespawnByTime();
     }
 
     protected override void LoadComponents()
@@ -35,12 +36,20 @@ public abstract class Despawn<T> : DespawnBase where T : PoolObj
         Debug.Log(transform.name + ": LoadSpawner", gameObject);
     }
 
-    protected virtual void DespawnChecking()
+    protected virtual void DespawnByTime()
     {
+        if (!this.isDespawnByTime) return;
+        
         this.currentTime -= Time.fixedDeltaTime;
         if (this.currentTime > 0) return;
 
-        this.spawner.Despawn(this.parent);
+        this.DoDespawn();
         this.currentTime = this.timeLife;
+    }
+
+    public override void DoDespawn()
+    {
+        this.spawner.Despawn(this.parent);
+
     }
 }

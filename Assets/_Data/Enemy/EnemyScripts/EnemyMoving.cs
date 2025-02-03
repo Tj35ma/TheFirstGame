@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyMoving : TFGMonoBehaviour
 {
-    public GameObject target;
     [SerializeField] protected EnemyCtrl enemyCtrl;    
     [SerializeField] protected string pathName = "path_0";
     [SerializeField] protected Path enemyPath;
@@ -16,6 +15,10 @@ public class EnemyMoving : TFGMonoBehaviour
     [SerializeField] protected bool isMoving = false;
     [SerializeField] protected bool isFinish = false;
 
+    protected virtual void OnEnable()
+    {
+        this.OnReborn();
+    }
 
     protected override void Start()
     {
@@ -32,7 +35,6 @@ public class EnemyMoving : TFGMonoBehaviour
     {
         base.LoadComponents();
         this.LoadEnemyCtrl();
-        //this.LoadTarget();
     }
 
     protected virtual void LoadEnemyCtrl()
@@ -50,6 +52,13 @@ public class EnemyMoving : TFGMonoBehaviour
             this.enemyCtrl.Agent.isStopped = true;
             return;
         }
+
+        if (this.enemyCtrl.EnemyDamageRecever.IsDead())
+        {
+            this.enemyCtrl.Agent.isStopped = true;
+            return;
+        }
+
         this.FindNextPoint();
 
         if (this.currentPoint == null || this.isFinish == true)
@@ -58,9 +67,7 @@ public class EnemyMoving : TFGMonoBehaviour
             return;
         }            
         this.enemyCtrl.Agent.isStopped = false;
-        this.enemyCtrl.Agent.SetDestination(this.currentPoint.transform.position);
-
-        //this.enemyCtrl.Agent.SetDestination(target.transform.position);
+        this.enemyCtrl.Agent.SetDestination(this.currentPoint.transform.position);        
     }
 
     protected virtual void FindNextPoint()
@@ -75,13 +82,7 @@ public class EnemyMoving : TFGMonoBehaviour
         }
 
     }
-
-    //protected virtual void LoadTarget()
-    //{
-    //    if (this.target != null) return;
-    //    this.target = GameObject.Find("TargetMoving");
-    //    Debug.Log(transform.name + ": LoadTarget", gameObject);
-    //}
+    
 
     protected virtual void LoadEnemyPath()
     {
@@ -96,6 +97,12 @@ public class EnemyMoving : TFGMonoBehaviour
         else this.isMoving = false;
 
         this.enemyCtrl.Animator.SetBool("isMoving", this.isMoving);
+    }
+
+    protected virtual void OnReborn()
+    {
+        this.isFinish = false;
+        this.currentPoint = null;
     }
 
 }

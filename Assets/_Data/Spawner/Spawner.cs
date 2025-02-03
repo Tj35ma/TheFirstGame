@@ -5,13 +5,23 @@ using UnityEngine;
 public abstract class Spawner<T> : TFGMonoBehaviour where T : PoolObj
 {
     [SerializeField] protected int spawnCount = 0;
+    [SerializeField] protected PoolHolder poolHolder;
     [SerializeField] protected List<T> inPoolObjs = new();
 
-    public virtual Transform Spawn(Transform prefab)
+    protected override void LoadComponents()
     {
-        Transform newObject = Instantiate(prefab);
-        return newObject;
+        base.LoadComponents();
+        this.LoadPoolHolder();
     }
+
+    protected virtual void LoadPoolHolder()
+    {
+
+        if (this.poolHolder != null) return;
+        this.poolHolder = transform.GetComponentInChildren<PoolHolder>();
+        Debug.Log(transform.name + ": LoadPoolHolder", gameObject);
+    }
+
 
     public virtual T Spawn(T prefab)
     {
@@ -21,7 +31,10 @@ public abstract class Spawner<T> : TFGMonoBehaviour where T : PoolObj
             newObject = Instantiate(prefab);
             this.spawnCount++;
             this.UpdateName(prefab.transform, newObject.transform);
-        }       
+        }
+
+        if(this.poolHolder != null) newObject.transform.parent = this.poolHolder.transform;
+
         return newObject;
     }
 

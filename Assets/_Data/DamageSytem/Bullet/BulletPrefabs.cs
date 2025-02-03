@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletDespawn : Despawn<BulletCtrl>
+public class BulletPrefabs : PoolPrefabs<BulletCtrl>
 {
     
 }
