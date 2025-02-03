@@ -84,7 +84,8 @@ public class TowerCtrl : TFGMonoBehaviour
     protected virtual void LoadTowerTargeting()
     {
         if (this.towerTargeting != null) return;
-        this.towerTargeting = transform.GetComponentInChildren<TowerTargeting>();        
+        this.towerTargeting = transform.GetComponentInChildren<TowerTargeting>();
+        this.towerTargeting.transform.localPosition = new Vector3(0, 1.3f, 0);
         Debug.Log(transform.name + ": LoadTowerTargeting", gameObject);
     }
 

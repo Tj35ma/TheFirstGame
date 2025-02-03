@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class ParasiteCtrl : EnemyCtrl
 {
-
-    public override string GetName()
-    {
-        return "Parasite";
-    }
+    [SerializeField] protected EnemyEnum enemyEnum;
+    public override string GetName() => this.enemyEnum.ToString();
+   
 }

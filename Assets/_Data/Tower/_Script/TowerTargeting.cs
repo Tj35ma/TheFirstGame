@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent (typeof(SphereCollider))]
@@ -66,7 +65,6 @@ public class TowerTargeting : TFGMonoBehaviour
         EnemyCtrl enemyCtrl = collider.transform.parent.GetComponent<EnemyCtrl>();
         if (enemyCtrl.EnemyDamageRecever.IsDead()) return;
         this.enemies.Add(enemyCtrl);
-        Debug.Log("AddEnemy: " + collider.name);
     }
 
     protected virtual void RemoveEnemy(Collider collider)
@@ -104,12 +102,17 @@ public class TowerTargeting : TFGMonoBehaviour
         Vector3 direction = target.transform.position - transform.position;
         float distance = direction.magnitude;
 
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, distance, obstacleLayerMask))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hitInfo, distance, this.obstacleLayerMask))
         {
+            Vector3 directionToCollider = hitInfo.point - transform.position;
+            float distanceToCollider = directionToCollider.magnitude;
+
+            Debug.DrawRay(transform.position, directionToCollider.normalized * distanceToCollider, Color.red);
+            Debug.Log($"stoped by: {hitInfo.transform.name}");
             return false;
         }
-        Debug.DrawLine(transform.position, target.transform.position, Color.green);
-        return true;        
+        Debug.DrawRay(transform.position, direction.normalized * distance, Color.green);
+        return true;
     }
 
     protected virtual void RemoveDeadEnemy()
