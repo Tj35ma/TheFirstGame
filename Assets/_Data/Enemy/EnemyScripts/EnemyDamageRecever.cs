@@ -39,6 +39,7 @@ public class EnemyDamageRecever : DamageRecever
         base.OnDead();
         this.enemyCtrl.Animator.SetBool("isDead", this.isDead);
         this.capsuleCollider.enabled = false;
+        this.RewardOnDead();
         Invoke(nameof(this.Disappear), 3f);
     }
 
@@ -57,5 +58,13 @@ public class EnemyDamageRecever : DamageRecever
     {
         base.OnReborn();
         this.capsuleCollider.enabled = true;
+    }
+
+    protected virtual void RewardOnDead()
+    {
+        ItemInventory item = new();
+        item.itemProfile = InventoryManager.Instance.GetProfileByEnum(ItemEnum.Gold);
+        item.itemCount = 1;
+        InventoryManager.Instance.Monies().AddItem(item);
     }
 }

@@ -30,8 +30,7 @@ public class EnemySpawning : EnemyManagerAbstract
         EnemyCtrl newEnemy = this.enemyManager.EnemySpawner.Spawn(prefab, transform.position);
         newEnemy.gameObject.SetActive(true);
 
-        this.spawnedEnemies.Add(newEnemy);
-        Debug.Log("Spawning");
+        this.spawnedEnemies.Add(newEnemy);        
     }
 
     protected virtual void RemoveDeadOne()

@@ -99,21 +99,22 @@ public class TowerTargeting : TFGMonoBehaviour
 
     protected virtual bool CanSeeTarget(EnemyCtrl target)
     {
-        Vector3 direction = target.transform.position - transform.position;
-        float distance = direction.magnitude;
+        Vector3 directionToTarget = target.transform.position - transform.position;
+        float distanceToTarget = directionToTarget.magnitude;
 
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hitInfo, distance, this.obstacleLayerMask))
+        if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, distanceToTarget, this.obstacleLayerMask))
         {
             Vector3 directionToCollider = hitInfo.point - transform.position;
             float distanceToCollider = directionToCollider.magnitude;
 
             Debug.DrawRay(transform.position, directionToCollider.normalized * distanceToCollider, Color.red);
-            Debug.Log($"stoped by: {hitInfo.transform.name}");
             return false;
         }
-        Debug.DrawRay(transform.position, direction.normalized * distance, Color.green);
+
+        Debug.DrawRay(transform.position, directionToTarget.normalized * distanceToTarget, Color.green);
         return true;
     }
+    
 
     protected virtual void RemoveDeadEnemy()
     {
