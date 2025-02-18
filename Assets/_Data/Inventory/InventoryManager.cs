@@ -6,12 +6,14 @@ using UnityEngine;
 public class InventoryManager : TFGSingleton<InventoryManager>
 {
     [SerializeField] protected List<InventoryCtrl> inventories;
-    [SerializeField] protected List<ItemProfileSO> itemProfiles;
+    [SerializeField] protected List<ItemProfileSO> itemProfiles;   
+       
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadInventories();
+        this.LoadItemProfiles();
     }
     
 
@@ -55,5 +57,12 @@ public class InventoryManager : TFGSingleton<InventoryManager>
     public virtual InventoryCtrl Items()
     {
         return this.GetByEnum(InventoryEnum.Items);
+    }
+    protected virtual void LoadItemProfiles()
+    {
+        if (this.itemProfiles.Count > 0) return;
+        ItemProfileSO[] itemProfileSOs = Resources.LoadAll<ItemProfileSO>("/");
+        this.itemProfiles = new List<ItemProfileSO>(itemProfileSOs);
+        Debug.Log(transform.name + ": LoadItemProfiles", gameObject);
     }
 }

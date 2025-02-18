@@ -60,7 +60,7 @@ public class TowerCtrl : TFGMonoBehaviour
     protected virtual void LoadBullet()
     {
         if (this.bullet != null) return;
-        this.bullet = this.bulletPrefabs.GetbyNanme(this.bulletName);
+        this.bullet = this.bulletPrefabs.GetbyName(this.bulletName);
         Debug.Log(transform.name + ": LoadBullet", gameObject);
     }
 

@@ -43,7 +43,7 @@ public class PoolPrefabs<T> : TFGMonoBehaviour where T : MonoBehaviour
         return this.prefabs[rand];
     }
 
-    public virtual T GetbyNanme(string prefabName)
+    public virtual T GetbyName(string prefabName)
     {
         foreach (T prefab in this.prefabs)
         {

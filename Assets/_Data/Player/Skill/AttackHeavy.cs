@@ -29,6 +29,6 @@ public class AttackHeavy : AttackAbstract
 
     protected virtual EffectCtrl GetEffect()
     {
-        return this.effectPrefabs.GetbyNanme(this.effectName);
+        return this.effectPrefabs.GetbyName(this.effectName);
     }
 }
