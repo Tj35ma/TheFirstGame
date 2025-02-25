@@ -62,10 +62,8 @@ public class EnemyDamageRecever : DamageRecever
 
     protected virtual void RewardOnDead()
     {
-        //ItemInventory item = new();
-        //item.itemProfile = InventoryManager.Instance.GetProfileByEnum(ItemEnum.Gold);
-        //item.itemCount = 1;
-        //InventoryManager.Instance.Monies().AddItem(item);
-        ItemsDropManager.Instance.Drop(ItemEnum.Gold,1,transform.position);
+        ItemsDropManager.Instance.DropMany(ItemEnum.Gold, 10, transform.position);
+        ItemsDropManager.Instance.DropMany(ItemEnum.PotionMana, 1, transform.position);
+        ItemsDropManager.Instance.DropMany(ItemEnum.PlayerExp, 2, transform.position);
     }
 }

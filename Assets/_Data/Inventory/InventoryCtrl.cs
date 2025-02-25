@@ -12,10 +12,10 @@ public abstract class InventoryCtrl : TFGMonoBehaviour
 
     public virtual void AddItem(ItemInventory item)
     {
-        ItemInventory itemExist = this.FindItem(item.itemProfile.itemEnum);
-        if (!item.itemProfile.isStackable || itemExist == null) 
+        ItemInventory itemExist = this.FindItem(item.ItemProfile.itemEnum);
+        if (!item.ItemProfile.isStackable || itemExist == null) 
         {
-            item.itemId = Random.Range(0, 999999999);
+            item.SetId(Random.Range(0, 999999999));
             this.items.Add(item);
             return;
         }
@@ -24,7 +24,7 @@ public abstract class InventoryCtrl : TFGMonoBehaviour
 
     public virtual bool RemoveItem(ItemInventory item)
     {
-        ItemInventory itemExist = this.FindItemNotEmpty(item.itemProfile.itemEnum);
+        ItemInventory itemExist = this.FindItemNotEmpty(item.ItemProfile.itemEnum);
         if (itemExist == null) return false;
         if (itemExist.itemCount < item.itemCount) return false;
         itemExist.itemCount -= item.itemCount;
@@ -36,7 +36,7 @@ public abstract class InventoryCtrl : TFGMonoBehaviour
     {
         foreach (ItemInventory itemInventory in this.items)
         {
-            if(itemInventory.itemProfile.itemEnum == itemEnum) return itemInventory;
+            if(itemInventory.ItemProfile.itemEnum == itemEnum) return itemInventory;
         }
         return null;
     }
@@ -45,7 +45,7 @@ public abstract class InventoryCtrl : TFGMonoBehaviour
     {
         foreach (ItemInventory itemInventory in this.items)
         {
-            if (itemInventory.itemProfile.itemEnum != itemEnum) continue;
+            if (itemInventory.ItemProfile.itemEnum != itemEnum) continue;
             if (itemInventory.itemCount > 0) return itemInventory;
         }
         return null;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2785565684749256152}
   - component: {fileID: 7999621180678122206}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4836061508966613219}
   - component: {fileID: 8584218996560867634}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Despawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 4271852569709478059}
   - component: {fileID: 4138662740727875766}
   - component: {fileID: 3807318657753076940}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DamageSender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 5025385972721575376}
   - component: {fileID: 929621404026663939}
   - component: {fileID: 8143295562194933182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

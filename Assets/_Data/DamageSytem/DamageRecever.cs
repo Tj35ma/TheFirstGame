@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class DamageRecever : TFGMonoBehaviour
 {
-    protected int maxHP = 10;
-    protected int currentHP = 10;
+    [SerializeField] protected int maxHP = 10;
+    public int MaxHp => maxHP;
+
+    [SerializeField] protected int currentHP = 10;
+
+    public int CurrentHp => currentHP;
+
     protected bool isDead = false;
-    [SerializeField]protected bool isImmotal = false;
+    [SerializeField] protected bool isImmotal = false;
 
     protected virtual void OnEnable()
     {

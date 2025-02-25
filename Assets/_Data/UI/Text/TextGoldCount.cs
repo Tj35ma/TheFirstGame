@@ -10,7 +10,7 @@ public class TextGoldCount : TextAbstract
 
     protected virtual void LoadGoldCount()
     {
-        ItemInventory item = InventoryManager.Instance.Monies().FindItem(ItemEnum.Gold);
+        ItemInventory item = InventoryManager.Instance.Currency().FindItem(ItemEnum.Gold);
         string goldCount; 
 
         if (item == null) goldCount = "0";

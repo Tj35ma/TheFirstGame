@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Path : TFGMonoBehaviour
+public class PathMoving : TFGMonoBehaviour
 {
     [SerializeField] protected List<Point> points;
 

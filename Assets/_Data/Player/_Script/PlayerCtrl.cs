@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class PlayerCtrl : TFGMonoBehaviour
+public class PlayerCtrl : TFGSingleton<PlayerCtrl>
 {
     [SerializeField] protected vThirdPersonController thirdPersonController;
     public vThirdPersonController ThirdPersonController => thirdPersonController;
@@ -21,6 +21,10 @@ public class PlayerCtrl : TFGMonoBehaviour
 
     [SerializeField] protected Weapons weapons;
     public Weapons Weapons => weapons;
+
+    [SerializeField] protected LevelAbstract level;
+    public LevelAbstract Level => level;
+
 
     protected override void LoadComponents()
     {

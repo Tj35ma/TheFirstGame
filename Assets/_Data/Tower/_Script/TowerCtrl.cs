@@ -34,6 +34,13 @@ public class TowerCtrl : TFGMonoBehaviour
     [SerializeField] protected BulletPrefabs bulletPrefabs;
     public BulletPrefabs BulletPrefabs => bulletPrefabs;
 
+
+    [SerializeField] protected TowerShooting towerShooting;
+    public TowerShooting TowerShooting => towerShooting;
+
+    [SerializeField] protected LevelAbstract level;
+    public LevelAbstract Level => level;
+
     protected override void Awake()
     {
         base.Awake();
@@ -48,6 +55,22 @@ public class TowerCtrl : TFGMonoBehaviour
         this.LoadBulletSpawner();        
         this.LoadBulletPrefabs();
         this.LoadFirePoint();
+        this.LoadTowerShooting();
+        this.LoadLevel();
+    }
+
+    protected virtual void LoadLevel()
+    {
+        if (this.level != null) return;
+        this.level = GetComponentInChildren<LevelAbstract>();
+        Debug.Log(transform.name + ": LoadLevel", gameObject);
+    }
+
+    protected virtual void LoadTowerShooting()
+    {
+        if (this.towerShooting != null) return;
+        this.towerShooting = transform.GetComponentInChildren<TowerShooting>();
+        Debug.Log(transform.name + ": LoadTowerShooting", gameObject);
     }
 
     protected virtual void LoadBulletSpawner()

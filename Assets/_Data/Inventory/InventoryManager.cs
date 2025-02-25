@@ -49,15 +49,44 @@ public class InventoryManager : TFGSingleton<InventoryManager>
         return null;
     }
 
-    public virtual InventoryCtrl Monies()
+    public virtual InventoryCtrl Currency()
     {
-        return this.GetByEnum(InventoryEnum.Monies);
+        return this.GetByEnum(InventoryEnum.Currency);
     }
 
     public virtual InventoryCtrl Items()
     {
         return this.GetByEnum(InventoryEnum.Items);
     }
+
+    public virtual void AddItem(ItemInventory itemInventory)
+    {
+        InventoryEnum inventoryEnum = itemInventory.ItemProfile.inventoryEnum;
+        InventoryCtrl inventoryCtrl = InventoryManager.Instance.GetByEnum(inventoryEnum);
+        inventoryCtrl.AddItem(itemInventory);
+    }
+
+    public virtual void AddItem(ItemEnum itemEnum, int itemCount)
+    {
+        ItemProfileSO itemProfile = InventoryManager.Instance.GetProfileByEnum(itemEnum);
+        ItemInventory item = new(itemProfile, itemCount);
+        this.AddItem(item);
+    }
+
+    public virtual void RemoveItem(ItemEnum itemEnum, int itemCount)
+    {
+        ItemProfileSO itemProfile = InventoryManager.Instance.GetProfileByEnum(itemEnum);
+        ItemInventory item = new(itemProfile, itemCount);
+        this.RemoveItem(item);
+    }
+
+    public virtual void RemoveItem(ItemInventory itemInventory)
+    {
+        InventoryEnum inventoryEnum = itemInventory.ItemProfile.inventoryEnum;
+        InventoryCtrl inventoryCtrl = InventoryManager.Instance.GetByEnum(inventoryEnum);
+        inventoryCtrl.RemoveItem(itemInventory);
+    }
+
     protected virtual void LoadItemProfiles()
     {
         if (this.itemProfiles.Count > 0) return;

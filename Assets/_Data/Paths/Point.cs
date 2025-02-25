@@ -12,7 +12,7 @@ public class Point : TFGMonoBehaviour
         base.LoadComponents();
         this.LoadNextPoint();
     }
-    public virtual void LoadNextPoint()
+    public virtual void LoadNextPoint() 
     {
         if(this.nextPoint !=null) return;
         int siblingIndex = transform.GetSiblingIndex();

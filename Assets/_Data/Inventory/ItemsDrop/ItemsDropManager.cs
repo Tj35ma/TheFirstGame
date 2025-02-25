@@ -22,13 +22,23 @@ public class ItemsDropManager : TFGSingleton<ItemsDropManager>
         this.spawner = GetComponent<ItemDropSpawner>();
         Debug.Log(transform.name + ": LoadSpawner", gameObject);
     }
+
+    public virtual void DropMany(ItemEnum itemEnum, int dropCount, Vector3 dropPosition)
+    {
+        for (int i = 0; i < dropCount; i++)
+        {
+            this.Drop(itemEnum, 1, dropPosition);
+        }
+    }
+
     public virtual void Drop(ItemEnum itemEnum, int dropCount, Vector3 dropPosition)
     {
-        Vector3 spawnPosition = dropPosition + new Vector3(Random.Range(-2, 2), spawnHeight, Random.Range(-2, 2));
-        ItemDropCtrl itemPrefab = this.spawner.PoolPrefabs.GetbyName("Gold");
+        Vector3 spawnPosition = dropPosition + new Vector3(Random.Range(-0.5f, 0.5f), spawnHeight, Random.Range(-0.5f, 0.5f));
+        ItemDropCtrl itemPrefab = this.spawner.PoolPrefabs.GetbyName(itemEnum.ToString());
+        if (itemPrefab == null) itemPrefab = this.spawner.PoolPrefabs.GetbyName("DefaultDrop");
 
         ItemDropCtrl newItem = this.spawner.Spawn(itemPrefab, spawnPosition);
-        newItem.SetValue(itemEnum, dropCount, InventoryEnum.Monies);
+        newItem.SetValue(itemEnum, dropCount, InventoryEnum.Currency);
         newItem.gameObject.SetActive(true);
 
         Vector3 randomDirection = Random.onUnitSphere;

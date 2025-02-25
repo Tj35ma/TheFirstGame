@@ -14,7 +14,7 @@ public class vThirdPersonCamera : MonoBehaviour
     public bool lockCamera;
 
     public float rightOffset = 0f;
-    public float defaultDistance = 2.5f;
+    public float defaultDistance = 3f;
     public float height = 1.4f;
     public float smoothFollow = 10f;
     public float xMouseSensitivity = 3f;

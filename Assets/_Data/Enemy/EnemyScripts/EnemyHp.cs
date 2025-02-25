@@ -1,0 +1,25 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyHp : SliderHp
+{
+    [SerializeField] protected EnemyCtrl enemyCtrl;
+
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        this.LoadEnemyCtrl();
+    }
+
+    protected virtual void LoadEnemyCtrl()
+    {
+        if (this.enemyCtrl != null) return;
+        this.enemyCtrl = GetComponentInParent<EnemyCtrl>();
+        Debug.Log(transform.name + ": LoadTowerCtrl", gameObject);
+    }
+
+    protected override float GetValue()
+    {
+        return (float)enemyCtrl.EnemyDamageRecever.CurrentHp / (float)this.enemyCtrl.EnemyDamageRecever.MaxHp;
+    }
+}
